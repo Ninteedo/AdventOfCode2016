@@ -10,3 +10,4 @@ lazy val root = (project in file("."))
 libraryDependencies += "org.scala-lang.modules" %% "scala-parallel-collections" % "1.2.0"
 libraryDependencies += "com.lihaoyi" %% "upickle" % "4.4.3"
 libraryDependencies += "com.google.ortools" % "ortools-java" % "9.15.6755"
+libraryDependencies += "com.softwaremill.sttp.client4" %% "core" % "4.0.27"

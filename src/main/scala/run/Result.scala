@@ -5,5 +5,5 @@ case class Result(part1: Any, part2: Any) {
 }
 
 object Result {
-  case class Test(expected1: Any, expected2: Option[Any], input: String)
+  case class Test(expected1: Option[Any], expected2: Option[Any], input: String)
 }

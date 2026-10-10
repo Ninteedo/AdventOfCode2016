@@ -8,7 +8,7 @@ class Day00 extends IDay(0) {
     Result(result.head, result.tail.head)
   }
 
-  val test = Result.Test("Foo", Some("Bar"), "Foo\nBar")
+  val test = Result.Test(Some("Foo"), Some("Bar"), "Foo\nBar")
 }
 
 object Day00 {
