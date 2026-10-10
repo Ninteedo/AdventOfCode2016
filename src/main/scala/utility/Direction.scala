@@ -42,4 +42,9 @@ object Direction {
     case '>' => Direction.East
     case other => throw new IllegalArgumentException(s"Invalid direction: $other")
   }
+
+  val Up: Direction = North
+  val Right: Direction = East
+  val Down: Direction = South
+  val Left: Direction = West
 }
