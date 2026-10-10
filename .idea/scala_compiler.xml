@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <option name="separateProdTestSources" value="true" />
+    <profile name="sbt 1" modules="AdventOfCode2015,AdventOfCode2015.main,AdventOfCode2015.test,AdventOfCode2016,AdventOfCode2016.main,AdventOfCode2016.test,adventofcode2016_9642,adventofcode2016_9642.main,adventofcode2016_9642.test" />
+  </component>
+</project>
