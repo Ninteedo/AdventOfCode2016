@@ -1,4 +1,4 @@
-package run
+package run.answer
 
 import scala.io.StdIn.readLine
 

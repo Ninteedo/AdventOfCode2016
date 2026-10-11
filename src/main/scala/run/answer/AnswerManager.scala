@@ -1,10 +1,11 @@
-package run
+package run.answer
 
-import run.AnswerManager.{IncorrectAnswer, IncorrectReason, PartAnswers}
-import run.AnswerSubmitter.AnswerPart
-import run.AnswerSubmitter.AnswerPart.{Part1, Part2}
-import run.AnswerSubmitter.ResponseKind.*
-import run.CorrectnessResponse.*
+import run.answer.AnswerManager.{IncorrectAnswer, IncorrectReason, PartAnswers}
+import run.answer.AnswerSubmitter.AnswerPart
+import run.answer.AnswerSubmitter.AnswerPart.{Part1, Part2}
+import run.answer.CorrectnessResponse.*
+import run.answer.SubmissionResponse.{AlreadySubmitted, Correct, Incorrect, Wait}
+import run.{IDay, Result}
 import upickle.ReadWriter
 
 import java.nio.file.{Files, Path}
@@ -74,12 +75,19 @@ case class AnswerManager(day: Int, dayString: String) {
           val submitter = AnswerSubmitter(2016, day)
           submitter.submit(answerPart, s) match {
             case Left(body) => throw new Exception(s"Unexpected response when submitting answer:\n$body")
-            case Right(kind) => kind match {
-              case AnswerCorrect => answerFactory(part.withCorrect(s))
-              case AnswerTooHigh => answerFactory(part.withAddedIncorrect(IncorrectAnswer(s, IncorrectReason.TOO_HIGH)))
-              case AnswerTooLow => answerFactory(part.withAddedIncorrect(IncorrectAnswer(s, IncorrectReason.TOO_LOW)))
-              case AnswerWrong => answerFactory(part.withAddedIncorrect(IncorrectAnswer(s, IncorrectReason.WRONG)))
-              case AlreadyAnswered => this
+            case Right(response: SubmissionResponse) => response match {
+              case Correct =>
+                println("⭐ Submitted the correct answer!" + (if (answerPart == Part1) " Please refresh the question page to see part 2." else ""))
+                answerFactory(part.withCorrect(s))
+              case Incorrect(reason, submitTime, waitDuration) =>
+                println(s"The submitted answer was ${reason.pretty}. Please wait $waitDuration before submitting another answer.")
+                answerFactory(part.withAddedIncorrect(IncorrectAnswer(s, reason)))
+              case AlreadySubmitted =>
+                println("The answer for that part has already been submitted.")
+                this
+              case Wait(submitTime, waitDuration) =>
+                println(s"Please wait $waitDuration before submitting another answer.")
+                this
             }
           }
       }
@@ -116,7 +124,9 @@ object AnswerManager {
 
   private case class IncorrectAnswer(value: String, reason: IncorrectReason) derives ReadWriter
 
-  private enum IncorrectReason derives ReadWriter {
-    case WRONG, TOO_HIGH, TOO_LOW
+  enum IncorrectReason(val pretty: String) derives ReadWriter {
+    case WRONG extends IncorrectReason("too high")
+    case TOO_HIGH extends IncorrectReason("too low")
+    case TOO_LOW extends IncorrectReason("wrong")
   }
 }
