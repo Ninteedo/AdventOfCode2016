@@ -35,4 +35,6 @@ case class DayInput(contents: String) {
       case None => throw IllegalArgumentException(s"Cannot find match for $regex")
     }
   }
+
+  override def toString: String = contents
 }

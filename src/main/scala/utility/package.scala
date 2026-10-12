@@ -41,6 +41,10 @@ package object utility {
     def thenOption[A](a: => A): Option[A] = if b then Some(a) else None
   }
 
+  extension (b: Byte) {
+    def toHexString: String = "%02X".formatted(b)
+  }
+
   extension (n: Int) {
     def inRangeInclusive(min: Int, max: Int): Boolean = n >= min && n <= max
 
