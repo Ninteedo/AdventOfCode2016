@@ -9,12 +9,12 @@ class Day03 extends IDay(3) {
     Result(part1(rows), part2(rows))
   }
 
-  private def part1(rows: List[List[Int]]) = {
+  private def part1(rows: List[List[Int]]): Int = {
     val triangles = rows.map(row => Triangle(row(0), row(1), row(2)))
     triangles.count(_.isValid)
   }
 
-  private def part2(rows: List[List[Int]]) = {
+  private def part2(rows: List[List[Int]]): Int = {
     val cols = Range(0, 3).map(col => rows.map(_(col)))
     assert(cols.forall(_.length % 3 == 0), "column lengths must be divisible by 3")
     val triangles = cols.flatMap(column => column.grouped(3).map(group => Triangle(group(0), group(1), group(2))))
