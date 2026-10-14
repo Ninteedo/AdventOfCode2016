@@ -48,6 +48,11 @@ package object utility {
   extension (n: Int) {
     def inRangeInclusive(min: Int, max: Int): Boolean = n >= min && n <= max
 
+    def positiveModulus(b: Int): Int = {
+      val modulus = n % b
+      if (modulus < 0) modulus + b else modulus
+    }
+
 //    def isNonNegative: Boolean = n >= 0
 //
 //    def isPositive: Boolean = n > 0
@@ -99,6 +104,11 @@ package object utility {
       }
 
       loop(b, n, 1L)
+    }
+
+    def positiveModulus(b: Long): Long = {
+      val modulus = n % b
+      if (modulus < 0) modulus + b else modulus
     }
   }
 

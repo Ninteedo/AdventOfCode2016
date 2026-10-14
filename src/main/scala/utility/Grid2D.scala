@@ -94,4 +94,8 @@ object Grid2D {
     val entries = lines.map(line => Vector.from(line.map(f))).toVector
     Grid2D(entries)
   }
+
+  def fill[T: ClassTag](rows: Int, cols: Int)(elem: T): Grid2D[T] = {
+    Grid2D(Vector.fill(rows)(Vector.fill(cols)(elem)))
+  }
 }
